@@ -1,0 +1,30 @@
+name: Build Modpack
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Descargar repo
+        uses: actions/checkout@v4
+
+      - name: Crear ZIP
+        run: |
+          mkdir dist
+          powershell Compress-Archive -Path Mods,extra -DestinationPath dist/mods.zip
+
+      - name: Crear Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ github.run_number }}
+          name: ECS Pack v${{ github.run_number }}
+          files: dist/mods.zip
