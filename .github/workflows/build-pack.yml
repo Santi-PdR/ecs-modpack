@@ -18,9 +18,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Crear ZIP
-        run: |
-          mkdir dist
-          powershell Compress-Archive -Path Mods,extra -DestinationPath dist/mods.zip
+  run: |
+    mkdir dist
+    zip -r dist/mods.zip Mods extra
 
       - name: Crear Release
         uses: softprops/action-gh-release@v2
